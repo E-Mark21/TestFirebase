@@ -21,7 +21,7 @@ public class MainModel implements MainContract.Model {
     public void loadData() {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("0");
+        DatabaseReference myRef = database.getReference("News");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -38,20 +38,7 @@ public class MainModel implements MainContract.Model {
 
             }
         });
-        dataName();
     }
 
-    public ArrayList dataName() {
-        return name;
-    }
-
-    public ArrayList dataDescription() {
-        return description;
-    }
-
-    public ArrayList dataUrl() {
-        return url;
-    }
 
 }
-

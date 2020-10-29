@@ -23,9 +23,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentMainView extends Fragment {
+public class FragmentMainView extends Fragment implements MainContract.View {
 
-    PresenterInterface mPresenterInterface;
+    private MainContract.Presenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,6 +37,7 @@ public class FragmentMainView extends Fragment {
                              Bundle savedInstanceState) {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.fragment_main, container, false);
+        presenter = new MainPresenter(this);
 
         CardNewsAdapter adapter = new CardNewsAdapter();
         recyclerView.setAdapter(adapter);
@@ -59,6 +60,7 @@ public class FragmentMainView extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull CardNewsAdapter.ViewHolder holder, int position) {
             CardView cardView = holder.cardView;
+
 
 
 

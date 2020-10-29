@@ -1,14 +1,13 @@
 package com.testfirebase;
 
-public class MainPresenter implements PresenterInterface {
-    ViewInterface view;
-    MainModel model;
+public class MainPresenter implements MainContract.Presenter {
+    private MainContract.View view;
+    private MainContract.Model model;
 
-    public MainPresenter(ViewInterface view) {
+
+
+    public MainPresenter(MainContract.View view) {
         this.view = view;
-        model = new MainModel();
-
-
-
+        this.model = new MainModel();
     }
 }

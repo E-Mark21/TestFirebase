@@ -6,7 +6,9 @@ public class MainPresenter implements PresenterInterface {
 
     public MainPresenter(ViewInterface view) {
         this.view = view;
-        model = new MainModel(this);
+        model = new MainModel();
+
+
 
     }
 }

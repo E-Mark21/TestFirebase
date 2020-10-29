@@ -1,5 +1,6 @@
 package com.testfirebase;
 
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -8,25 +9,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainModel {
+import java.util.ArrayList;
 
-    PresenterInterface presenter;
+public class MainModel implements MainContract.Model {
 
-    public MainModel(PresenterInterface presenter) {
-        this.presenter = presenter;
-    }
+    ArrayList<String> name;
+    ArrayList<String> description;
+    ArrayList<String> url;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("0");
+    @Override
+    public void loadData() {
 
-
-
-    public void getData() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("0");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-            Data data = snapshot.getValue(Data.class);
-
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Data data = ds.getValue(Data.class);
+                    name.add(data.getName());
+                    description.add(data.getDescription());
+                    url.add(data.getUrl());
+                }
             }
 
             @Override
@@ -34,14 +38,20 @@ public class MainModel {
 
             }
         });
+        dataName();
     }
 
-    private static class Data {
-
-        public String name;
-        public String description;
-        public String url;
-
+    public ArrayList dataName() {
+        return name;
     }
+
+    public ArrayList dataDescription() {
+        return description;
+    }
+
+    public ArrayList dataUrl() {
+        return url;
+    }
+
 }
 

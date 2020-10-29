@@ -2,12 +2,15 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="120dp"
     android:id="@+id/card_model"
-    app:cardBackgroundColor="@color/card_background"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="5dp"
+    card_view:cardBackgroundColor="@color/card_background"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="5dp"
+    android:layout_margin="5dp"
     >
 
 
@@ -17,37 +20,33 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginEnd="213dp"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="150dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="192dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.208"
-            app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.285" />
+            tools:text="Видеокарта GeForce RTX 3060 Ti полностью рассекречена — 4864 ядра CUDA, 8 ГБ памяти, GPU с частотой до 1665 МГц и цена ниже $400" />
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="192dp"
+            android:layout_height="56dp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.203"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.309" />
+            tools:text="29 октября стартуют продажи видеокарты GeForce RTX 3070 на урезанной версии графического процессора GA104-300 с 5888 ядрами CUDA и c 8 ГБ памяти GDDR6…" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

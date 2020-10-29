@@ -13,7 +13,7 @@ public class MainView extends AppCompatActivity implements ViewInterface {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_main);
+        setContentView(R.layout.activity_main);
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment mainFragment = fragmentManager.findFragmentById(R.id.activity_main);
         if (mainFragment == null) {

@@ -13,12 +13,16 @@ import java.util.ArrayList;
 
 public class MainModel implements MainContract.Model {
 
-    ArrayList<String> name;
-    ArrayList<String> description;
-    ArrayList<String> url;
+    public ArrayList<String> name1;
+    public ArrayList<String> description;
+    public ArrayList<String> url;
+    String[] authorNews = new String[100];
+
+    public MainModel() {
+    }
 
     @Override
-    public void loadData() {
+    public String[] loadData() {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("News");
@@ -26,10 +30,10 @@ public class MainModel implements MainContract.Model {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    int count = 0;
                     Data data = ds.getValue(Data.class);
-                    name.add(data.getName());
-                    description.add(data.getDescription());
-                    url.add(data.getUrl());
+                    authorNews[count] = data.name;
+                    count++;
                 }
             }
 
@@ -38,7 +42,11 @@ public class MainModel implements MainContract.Model {
 
             }
         });
+        return authorNews;
     }
 
-
+    @Override
+    public String[] getAuthorNews() {
+        return authorNews;
+    }
 }

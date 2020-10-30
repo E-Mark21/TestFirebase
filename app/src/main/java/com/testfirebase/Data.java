@@ -2,23 +2,23 @@ package com.testfirebase;
 
 public class Data {
 
-    private String name;
-    private String description;
-    private String url;
-    //private String id;
+     String name;
+     String description;
+     String url;
 
-    public String getName() {
-        return name;
-    }
 
     public Data() {
     }
 
-    public Data(String name, String description, String url/*, String id*/) {
+    public Data(String name, String description, String url) {
         this.name = name;
         this.description = description;
         this.url = url;
-        //this.id = id;
+
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -41,11 +41,4 @@ public class Data {
         this.url = url;
     }
 
-   /* public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }*/
 }

@@ -1,21 +1,21 @@
 package com.testfirebase;
 
-public interface MainContract {
-    interface View {
+import java.util.ArrayList;
 
+public interface MainContract {
+
+
+    interface View {
 
     }
 
     interface Presenter {
-        public String[] data();
-        public String[] returnString();
+         void startDB();
+        public void getData();
     }
 
     interface Model {
-        String[] loadData();
-        public String[] getAuthorNews();
-
-
-
+        public ArrayList<String> getmList();
+        void loadData();
     }
 }

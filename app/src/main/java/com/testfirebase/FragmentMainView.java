@@ -26,14 +26,13 @@ import java.util.List;
 public class FragmentMainView extends Fragment implements MainContract.View {
 
     private MainContract.Presenter presenter;
-    String[] names1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter(this);
-        presenter.data();
-        setName();
+        presenter.startDB();
+        presenter.getData();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.fragment_main, container, false);
 
-        CardNewsAdapter adapter = new CardNewsAdapter(names1);
+        CardNewsAdapter adapter = new CardNewsAdapter();
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -51,11 +50,6 @@ public class FragmentMainView extends Fragment implements MainContract.View {
     }
 
     class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
-        String[] names2;
-
-        public CardNewsAdapter(String[] names1) {
-            this.names2 = names1;
-        }
 
         @NonNull
         @Override
@@ -69,8 +63,8 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         public void onBindViewHolder(@NonNull CardNewsAdapter.ViewHolder holder, int position) {
             CardView cardView = holder.cardView;
 
-            TextView textView = cardView.findViewById(R.id.name);
-            textView.setText(names2[0]);
+            //TextView textView = cardView.findViewById(R.id.name);
+            //textView.setText(names2[0]);
 
         }
 
@@ -89,9 +83,4 @@ public class FragmentMainView extends Fragment implements MainContract.View {
             }
         }
     }
-
-    public void setName () {
-        names1 = presenter.returnString();
-    }
-
 }

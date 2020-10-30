@@ -1,10 +1,13 @@
 package com.testfirebase;
 
 
+import java.util.ArrayList;
+
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
     private MainContract.Model model;
-    String[] names;
+    public ArrayList<String> mName = new ArrayList<>();
+
 
     public MainPresenter(MainContract.View view) {
         this.view = view;
@@ -12,16 +15,11 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public String[] data() {
+    public void startDB() {
         model.loadData();
-
     }
     @Override
-    public String[] returnString() {
-        names = model.getAuthorNews();
-        return  names;
+    public void getData() {
+        mName = model.getmList();
     }
-
-
-
 }

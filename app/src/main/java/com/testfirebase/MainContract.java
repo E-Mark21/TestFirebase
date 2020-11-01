@@ -1,6 +1,5 @@
 package com.testfirebase;
 
-import java.util.ArrayList;
 
 public interface MainContract {
 
@@ -10,12 +9,12 @@ public interface MainContract {
     }
 
     interface Presenter {
-         void startDB();
-        public void getData();
+
     }
 
     interface Model {
-        public ArrayList<String> getmList();
-        void loadData();
+         void loadData();
+        void registeredCallback(MainModel.Callback callback);
+
     }
 }

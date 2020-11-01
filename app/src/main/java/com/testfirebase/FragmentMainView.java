@@ -31,8 +31,6 @@ public class FragmentMainView extends Fragment implements MainContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter(this);
-        presenter.startDB();
-        presenter.getData();
     }
 
     @Override

@@ -13,27 +13,14 @@ import java.util.ArrayList;
 
 public class MainModel implements MainContract.Model {
 
-    interface Callback {
-        void returnData(ArrayList<String> mList);
-    }
-    Callback callback;
-@Override
-    public void registeredCallback(Callback callback) {
-        this.callback = callback;
-    }
 
-    MainContract.Presenter mPresenter;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("News");
     public ArrayList<String> mList = new ArrayList<>();
 
-    public MainModel(MainPresenter mainPresenter) {
-        this.mPresenter = mainPresenter;
-    }
 
-
-@Override
-    public void loadData() {
+    @Override
+    public void loadData(FirebaseCallback callback) {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -41,7 +28,7 @@ public class MainModel implements MainContract.Model {
                     Data data = ds.getValue(Data.class);
                     String name = data.name;
                     mList.add(name);
-                    int i = 0;
+                    callback.returnData(name);
                 }
             }
 
@@ -50,7 +37,5 @@ public class MainModel implements MainContract.Model {
 
             }
         });
-        callback.returnData(mList);
-
     }
 }

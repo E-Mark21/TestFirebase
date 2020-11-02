@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,24 +12,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FragmentMainView extends Fragment implements MainContract.View {
 
     private MainContract.Presenter presenter;
+    String d;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter(this);
+        getData();
+
     }
 
     @Override
@@ -39,15 +32,21 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.fragment_main, container, false);
 
-        CardNewsAdapter adapter = new CardNewsAdapter();
+        CardNewsAdapter adapter = new CardNewsAdapter(d);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
         return recyclerView;
 
     }
 
     class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
+        String name;
+
+        public CardNewsAdapter(String d) {
+            this.name = d;
+        }
 
         @NonNull
         @Override
@@ -61,8 +60,8 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         public void onBindViewHolder(@NonNull CardNewsAdapter.ViewHolder holder, int position) {
             CardView cardView = holder.cardView;
 
-            //TextView textView = cardView.findViewById(R.id.name);
-            //textView.setText(names2[0]);
+            TextView textView = cardView.findViewById(R.id.name);
+            textView.setText(d);
 
         }
 
@@ -80,5 +79,14 @@ public class FragmentMainView extends Fragment implements MainContract.View {
                 cardView = v;
             }
         }
+    }
+
+    @Override
+    public void getData() {
+        presenter.data();
+    }
+    @Override
+    public void get(){
+
     }
 }

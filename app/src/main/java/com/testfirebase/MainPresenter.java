@@ -1,31 +1,32 @@
 package com.testfirebase;
 
+public class MainPresenter implements MainContract.Presenter, FirebaseCallback {
 
-import java.util.ArrayList;
-
-public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
     private MainContract.Model model;
-    ArrayList<String> mName;
-
+    FirebaseCallback mFirebaseCallback;
+    String s;
 
 
     public MainPresenter(MainContract.View view) {
         this.view = view;
-        this.model = new MainModel(this);
-        MyClass myClass = new MyClass();
-        model.registeredCallback(myClass);
-        model.loadData();
+        this.model = new MainModel();
+        int i = 0;
+
     }
 
+    @Override
+    public void data() {
+        model.loadData(mFirebaseCallback);
+    }
 
+    @Override
+    public String getList() {
+        return s;
+    }
 
-    class MyClass implements MainModel.Callback {
+    @Override
+    public void returnData(String string) {
 
-        @Override
-        public void returnData(ArrayList<String> mList) {
-            mName = new ArrayList<>(mList);
-            int p = 0;
-        }
     }
 }

@@ -1,5 +1,8 @@
 package com.testfirebase;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Data {
 
      String name;

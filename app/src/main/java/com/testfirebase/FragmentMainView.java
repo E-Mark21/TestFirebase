@@ -12,18 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 
 public class FragmentMainView extends Fragment implements MainContract.View {
 
     private MainContract.Presenter presenter;
-    String d;
+    ArrayList mName = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter(this);
         getData();
-
     }
 
     @Override
@@ -32,20 +33,31 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         RecyclerView recyclerView = (RecyclerView) inflater.inflate(
                 R.layout.fragment_main, container, false);
 
-        CardNewsAdapter adapter = new CardNewsAdapter(d);
+        CardNewsAdapter adapter = new CardNewsAdapter(mName);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
         return recyclerView;
 
     }
 
-    class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
-        String name;
+    private void updateUI(CardNewsAdapter adapter) {
+        adapter.updateItem(mName);
+    }
 
-        public CardNewsAdapter(String d) {
-            this.name = d;
+
+    class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
+        ArrayList<String> mName;
+
+
+        public CardNewsAdapter(ArrayList<String> mName) {
+            this.mName = mName;
+        }
+
+        public void updateItem(ArrayList mName) {
+            mName.clear();
+            this.mName = mName;
+            notifyDataSetChanged();
         }
 
         @NonNull
@@ -61,10 +73,10 @@ public class FragmentMainView extends Fragment implements MainContract.View {
             CardView cardView = holder.cardView;
 
             TextView textView = cardView.findViewById(R.id.name);
-            textView.setText(d);
-
+            for (String name : mName) {
+                textView.setText(name);
+            }
         }
-
 
         @Override
         public int getItemCount() {
@@ -72,7 +84,7 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private CardView cardView;
+            private final CardView cardView;
 
             public ViewHolder(@NonNull CardView v) {
                 super(v);
@@ -83,10 +95,11 @@ public class FragmentMainView extends Fragment implements MainContract.View {
 
     @Override
     public void getData() {
-        presenter.data();
+        mName = presenter.data();
     }
-    @Override
-    public void get(){
 
+    @Override
+    public void updateAdapter(ArrayList mList) {
+        updateUI( new  CardNewsAdapter (mList));
     }
 }

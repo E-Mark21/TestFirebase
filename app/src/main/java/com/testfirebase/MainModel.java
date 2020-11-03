@@ -1,6 +1,8 @@
 package com.testfirebase;
 
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -12,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainModel implements MainContract.Model {
-
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("News");
@@ -26,9 +27,8 @@ public class MainModel implements MainContract.Model {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Data data = ds.getValue(Data.class);
-                    String name = data.name;
-                    mList.add(name);
-                    callback.returnData(name);
+                    mList.add(data.name);
+                    callback.returnData(mList);
                 }
             }
 

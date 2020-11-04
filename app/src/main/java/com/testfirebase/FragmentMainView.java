@@ -18,35 +18,33 @@ import java.util.ArrayList;
 public class FragmentMainView extends Fragment implements MainContract.View {
 
     private MainContract.Presenter presenter;
-    ArrayList mName = new ArrayList<>();
+    RecyclerView mRecyclerView;
+    CardNewsAdapter adapter;
+    public static ArrayList mName = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter = new MainPresenter(this);
-        getData();
+        downloadData();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView) inflater.inflate(
+        mRecyclerView = (RecyclerView) inflater.inflate(
                 R.layout.fragment_main, container, false);
-
-        CardNewsAdapter adapter = new CardNewsAdapter(mName);
-        recyclerView.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        return recyclerView;
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        updateAdapter(mName);
+
+        return mRecyclerView;
 
     }
 
-    private void updateUI(CardNewsAdapter adapter) {
-        adapter.updateItem(mName);
-    }
 
-
-    class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
+    static class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
         ArrayList<String> mName;
 
 
@@ -94,12 +92,19 @@ public class FragmentMainView extends Fragment implements MainContract.View {
     }
 
     @Override
-    public void getData() {
-        mName = presenter.data();
+    public void downloadData() {
+        presenter.data();
     }
 
     @Override
     public void updateAdapter(ArrayList mList) {
-        updateUI( new  CardNewsAdapter (mList));
+        if (adapter == null) {
+            adapter = new CardNewsAdapter(mList);
+            mRecyclerView.setAdapter(adapter);
+        } else {
+            adapter.updateItem(mList);
+            adapter.notifyDataSetChanged();
+        }
+
     }
 }

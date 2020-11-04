@@ -14,7 +14,7 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public ArrayList data() {
+    public void data() {
         model.loadData(new FirebaseCallback() {
             @Override
             public void returnData(ArrayList mList) {
@@ -22,7 +22,6 @@ public class MainPresenter implements MainContract.Presenter {
                 updateRV(mList);
             }
         });
-        return mName;
     }
 
     public void updateRV(ArrayList mList) {

@@ -7,13 +7,13 @@ public interface MainContract {
 
 
     interface View {
-        void getData();
+        void downloadData();
 
         void updateAdapter(ArrayList mList);
     }
 
     interface Presenter {
-        ArrayList data();
+        void data();
 
     }
 

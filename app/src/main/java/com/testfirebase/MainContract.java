@@ -9,16 +9,15 @@ public interface MainContract {
     interface View {
         void downloadData();
 
-        void updateAdapter(ArrayList mList);
+        void updateAdapter(ArrayList mName, ArrayList mDescription, ArrayList mUrl);
     }
 
     interface Presenter {
-        void data();
+        void getData();
 
     }
 
     interface Model {
         void loadData(FirebaseCallback callback);
-
     }
 }

@@ -1,8 +1,6 @@
 package com.testfirebase;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +15,9 @@ public class MainModel implements MainContract.Model {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("News");
-    public ArrayList<String> mList = new ArrayList<>();
+    public ArrayList<String> mName = new ArrayList<>();
+    public ArrayList<String> mDescription = new ArrayList<>();
+    public ArrayList<String> mUrl = new ArrayList<>();
 
 
     @Override
@@ -27,8 +27,10 @@ public class MainModel implements MainContract.Model {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Data data = ds.getValue(Data.class);
-                    mList.add(data.name);
-                    callback.returnData(mList);
+                    mName.add(data.name);
+                    mDescription.add(data.description);
+                    mUrl.add(data.url);
+                    callback.returnData(mName, mDescription, mUrl);
                 }
             }
 

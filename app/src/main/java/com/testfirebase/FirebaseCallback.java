@@ -5,6 +5,6 @@ import java.util.ArrayList;
 
 public interface FirebaseCallback {
 
-    void returnData(ArrayList mList);
+    void returnData(ArrayList mName, ArrayList mDescription, ArrayList mUrl);
 
 }

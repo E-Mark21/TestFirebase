@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -20,7 +23,9 @@ public class FragmentMainView extends Fragment implements MainContract.View {
     private MainContract.Presenter presenter;
     RecyclerView mRecyclerView;
     CardNewsAdapter adapter;
-    public static ArrayList mName = new ArrayList<>();
+    private ArrayList<String> mName = new ArrayList<>();
+    private ArrayList<String> mDescription = new ArrayList<>();
+    private ArrayList<String> mUrl = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,25 +41,30 @@ public class FragmentMainView extends Fragment implements MainContract.View {
                 R.layout.fragment_main, container, false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
-
-        updateAdapter(mName);
-
+        updateAdapter(mName, mDescription, mUrl);
         return mRecyclerView;
-
     }
 
 
     static class CardNewsAdapter extends RecyclerView.Adapter<CardNewsAdapter.ViewHolder> {
-        ArrayList<String> mName;
+        private ArrayList<String> mName;
+        private ArrayList<String> mDescription;
+        private ArrayList<String> mUrl;
 
 
-        public CardNewsAdapter(ArrayList<String> mName) {
+        public CardNewsAdapter(ArrayList mName, ArrayList mDescription, ArrayList mUrl) {
             this.mName = mName;
+            this.mDescription = mDescription;
+            this.mUrl = mUrl;
         }
 
-        public void updateItem(ArrayList mName) {
+        public void updateItem(ArrayList mName, ArrayList mDescription, ArrayList mUrl) {
             mName.clear();
+            mDescription.clear();
+            mUrl.clear();
             this.mName = mName;
+            this.mDescription = mDescription;
+            this.mUrl = mUrl;
             notifyDataSetChanged();
         }
 
@@ -69,19 +79,24 @@ public class FragmentMainView extends Fragment implements MainContract.View {
         @Override
         public void onBindViewHolder(@NonNull CardNewsAdapter.ViewHolder holder, int position) {
             CardView cardView = holder.cardView;
-
-            TextView textView = cardView.findViewById(R.id.name);
-            for (String name : mName) {
-                textView.setText(name);
-            }
+            TextView name = cardView.findViewById(R.id.name);
+            TextView description = cardView.findViewById(R.id.description);
+            ImageView image = cardView.findViewById(R.id.image);
+            name.setText(mName.get(position));
+            description.setText(mDescription.get(position));
+            Picasso.with(holder.itemView.getContext()).
+                    load(mUrl.get(position))
+                    .placeholder(R.drawable.placeholder)
+                    .into(image);
         }
 
         @Override
         public int getItemCount() {
-            return 3;
+            return mName.size();
         }
 
-        class ViewHolder extends RecyclerView.ViewHolder {
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
             private final CardView cardView;
 
             public ViewHolder(@NonNull CardView v) {
@@ -93,18 +108,17 @@ public class FragmentMainView extends Fragment implements MainContract.View {
 
     @Override
     public void downloadData() {
-        presenter.data();
+        presenter.getData();
     }
 
     @Override
-    public void updateAdapter(ArrayList mList) {
+    public void updateAdapter(ArrayList mName, ArrayList mDescription, ArrayList mUrl) {
         if (adapter == null) {
-            adapter = new CardNewsAdapter(mList);
+            adapter = new CardNewsAdapter(mName, mDescription, mUrl);
             mRecyclerView.setAdapter(adapter);
         } else {
-            adapter.updateItem(mList);
+            adapter.updateItem(mName, mDescription, mUrl);
             adapter.notifyDataSetChanged();
         }
-
     }
 }

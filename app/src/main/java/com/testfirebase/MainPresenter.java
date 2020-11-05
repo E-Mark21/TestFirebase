@@ -6,7 +6,6 @@ public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View view;
     private MainContract.Model model;
-    ArrayList<String> mName = new ArrayList<>();
 
     public MainPresenter(MainContract.View view) {
         this.view = view;
@@ -14,17 +13,16 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     @Override
-    public void data() {
+    public void getData() {
         model.loadData(new FirebaseCallback() {
             @Override
-            public void returnData(ArrayList mList) {
-                mName = mList;
-                updateRV(mList);
+            public void returnData(ArrayList mName, ArrayList mDescription, ArrayList mUrl) {
+                updateRV(mName, mDescription, mUrl);
             }
         });
     }
 
-    public void updateRV(ArrayList mList) {
-        view.updateAdapter(mList);
+    public void updateRV(ArrayList mName, ArrayList mDescription, ArrayList mUrl) {
+        view.updateAdapter(mName, mDescription, mUrl);
     }
 }
